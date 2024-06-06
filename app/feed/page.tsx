@@ -1,4 +1,3 @@
-import AuthButton from "@/components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -14,8 +13,8 @@ export default async function ProtectedPage() {
   }
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center justify-center">
-      <AuthButton />
+    <div className="bg-gray-400 h-full p-4">
+      <h1>feed</h1>
     </div>
   );
 }
