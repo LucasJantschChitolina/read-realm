@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <p>item</p>
         <p>item</p>
       </nav>
-      <div className="flex-1">
+      <div className="flex flex-col w-full">
         <header className="flex justify-between items-center p-4 bg-gray-600">
           <h1>Read Realm</h1>
           <AuthButton />
