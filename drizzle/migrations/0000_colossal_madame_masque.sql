@@ -3,3 +3,8 @@ CREATE TABLE IF NOT EXISTS "books" (
 	"name" varchar(256),
 	"author" varchar(256)
 );
+
+CREATE TABLE IF NOT EXISTS `author` (
+    `id` CHAR(36) PRIMARY KEY DEFAULT (UUID()) NOT NULL,
+    `name` VARCHAR(256) NOT NULL
+);
