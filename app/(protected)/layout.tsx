@@ -1,5 +1,5 @@
 import AuthButton from "@/components/AuthButton";
-import NavBar from "./components/nav-bar";
+import NavBar from "@/components/NavBar";
 import { ReactNode } from "react";
 
 const Layout = ({ children }: { children: ReactNode }) => {
