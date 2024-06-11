@@ -7,7 +7,7 @@ const Book = async ({ params }: { params: { id: string } }) => {
   const deleteBookWithId = deleteBook.bind(null, bookData.id);
 
   return (
-    <div>
+    <div className="p-4 flex gap-2 flex-col">
       <h1 className="text-3xl font-bold">{bookData.name}</h1>
       <p className="text-lg">{bookData.author}</p>
 
