@@ -20,9 +20,9 @@ function NavBarItem(props: ItemProps) {
 
 export default function NavBar() {
     return (
-        <nav className="flex-1 h-full bg-slate-50 max-w-44 p-4 flex flex-col gap-4 font-medium">
+        <nav className="h-full bg-slate-50 w-64 p-4 flex flex-col gap-4 font-medium">
             <NavBarItem href="/teste" active icon={<Settings className="text-white" size={16}  />}>
-                Texto
+                Home
             </NavBarItem>
             <NavBarItem href="/teste" icon={<User className="text-white" size={16} />}>
                 Texto
