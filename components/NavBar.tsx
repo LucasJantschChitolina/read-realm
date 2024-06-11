@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { HomeIcon, Users, Edit, BookOpenText, LibraryBig, ShoppingBasket, FileBarChart2, BookHeart } from "lucide-react"
+import { HomeIcon, Users, Edit, BookOpenText, LibraryBig, ShoppingBasket, FileBarChart2, BookHeart, BookPlus } from "lucide-react"
 
 interface ItemProps {
     icon: ReactNode
@@ -21,8 +21,11 @@ function NavBarItem(props: ItemProps) {
 export default function NavBar() {
     return (
         <nav className="h-full bg-slate-50 w-64 p-4 flex flex-col gap-4 font-medium">
-            <NavBarItem href="/teste" active icon={<HomeIcon className="text-white" size={16}  />}>
-                Home
+            <NavBarItem href="/feed" active icon={<HomeIcon className="text-white" size={16}  />}>
+                Feed
+            </NavBarItem>
+            <NavBarItem href="/books/create" icon={<BookPlus className="text-white" size={16} />}>
+                Livros
             </NavBarItem>
             <NavBarItem href="/teste" icon={<Edit className="text-white" size={16} />}>
                 Editoras
