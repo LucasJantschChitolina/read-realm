@@ -1,7 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
-import Link from "next/link";
+import { HeroSection } from "@/components/layout/hero";
+import { FeaturesSection } from "@/components/layout/features";
+import { BenefitsSection } from "@/components/layout/benefits";
+import { TestimonialSection } from "@/components/layout/testimonials";
+import { FAQSection } from "@/components/layout/faq";
+import { PricingSection } from "@/components/layout/pricing";
 
 export default async function Page() {
   const supabase = createClient();
@@ -15,9 +20,13 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <p>home page</p>
-      <Link href="/login">login</Link>
+    <div className="flex flex-col">
+      <HeroSection />
+      <BenefitsSection />
+      <FeaturesSection />
+      <TestimonialSection />
+      <PricingSection />
+      <FAQSection />
     </div>
   );
 }
