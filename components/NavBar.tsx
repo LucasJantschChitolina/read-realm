@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { Settings, User, HomeIcon } from "lucide-react"
+import { HomeIcon, Users, Edit, BookOpenText, LibraryBig, ShoppingBasket, FileBarChart2, BookHeart } from "lucide-react"
 
 interface ItemProps {
     icon: ReactNode
@@ -21,11 +21,32 @@ function NavBarItem(props: ItemProps) {
 export default function NavBar() {
     return (
         <nav className="h-full bg-slate-50 w-64 p-4 flex flex-col gap-4 font-medium">
-            <NavBarItem href="/teste" active icon={<Settings className="text-white" size={16}  />}>
+            <NavBarItem href="/teste" active icon={<HomeIcon className="text-white" size={16}  />}>
                 Home
             </NavBarItem>
-            <NavBarItem href="/teste" icon={<User className="text-white" size={16} />}>
-                Texto
+            <NavBarItem href="/teste" icon={<Edit className="text-white" size={16} />}>
+                Editoras
+            </NavBarItem>
+            <NavBarItem href="/teste" icon={<BookOpenText className="text-white" size={16} />}>
+                Autores
+            </NavBarItem>
+            <NavBarItem href="/teste" icon={<LibraryBig className="text-white" size={16} />}>
+                Categorias
+            </NavBarItem>
+            <NavBarItem href="/teste" icon={<Users className="text-white" size={16} />}>
+                Pessoas
+            </NavBarItem>
+            <NavBarItem href="/teste" icon={<LibraryBig className="text-white" size={16} />}>
+                Categorias
+            </NavBarItem>
+            <NavBarItem href="/teste" icon={<ShoppingBasket className="text-white" size={16} />}>
+                Empréstimos
+            </NavBarItem>
+            <NavBarItem href="/teste" icon={<BookHeart className="text-white" size={16} />}>
+                Meus Livros 
+            </NavBarItem>
+            <NavBarItem href="/teste" icon={<FileBarChart2 className="text-white" size={16} />}>
+                Relatório 
             </NavBarItem>
 
         </nav>
