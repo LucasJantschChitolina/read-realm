@@ -1,0 +1,27 @@
+ALTER TABLE "author" ALTER COLUMN "name" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book" ALTER COLUMN "title" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book" ALTER COLUMN "year" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book" ALTER COLUMN "pages" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book" ALTER COLUMN "edition" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book" ALTER COLUMN "summary" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book" ALTER COLUMN "borrowed" SET DEFAULT false;--> statement-breakpoint
+ALTER TABLE "book" ALTER COLUMN "copies" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book" ALTER COLUMN "category_id" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book" ALTER COLUMN "publisher_id" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book_author" ALTER COLUMN "book_id" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "book_author" ALTER COLUMN "author_id" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "category" ALTER COLUMN "description" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "loan" ALTER COLUMN "loan_date" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "loan" ALTER COLUMN "due_date" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "loan" ALTER COLUMN "return_date" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "loan" ALTER COLUMN "book_id" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "loan" ALTER COLUMN "person_id" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "person" ALTER COLUMN "name" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "person" ALTER COLUMN "type" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "person" ALTER COLUMN "email" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "person" ALTER COLUMN "password" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "person" ALTER COLUMN "phone" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "person" ALTER COLUMN "student_id" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "person" ALTER COLUMN "admin_id" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "publisher" ALTER COLUMN "name" SET NOT NULL;--> statement-breakpoint
+ALTER TABLE "student" ADD COLUMN "name" varchar(255) NOT NULL;
