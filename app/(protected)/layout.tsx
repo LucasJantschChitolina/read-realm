@@ -1,6 +1,7 @@
 import AuthButton from "@/components/auth-button";
 import NavBar from "@/components/nav-bar";
 import { ReactNode } from "react";
+import AppBreadcrumb from "./components/breadcrumb";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -8,7 +9,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <NavBar />
       <div className="flex flex-col w-full">
         <header className="flex justify-between items-center p-4">
-          <h1>Read Realm</h1>
+          <div>
+            <h1 className="font-bold">Read Realm</h1>
+            <AppBreadcrumb />
+          </div>
           <AuthButton />
         </header>
         {children}
