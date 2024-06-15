@@ -13,8 +13,7 @@ const CreateBook = () => {
           <h1 className="font-bold text-2xl">Create Book</h1>
 
           <div className="flex flex-row gap-2">
-            <Input name="name" type="text" placeholder="name" />
-            <Input name="author" type="text" placeholder="author" />
+            <Input name="title" type="text" placeholder="title" />
             <Button type="submit">Create</Button>
           </div>
         </Card>

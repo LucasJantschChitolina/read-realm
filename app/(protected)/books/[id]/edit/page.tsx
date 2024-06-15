@@ -8,8 +8,7 @@ const Book = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="p-4 flex gap-2 flex-col">
-      <h1 className="text-3xl font-bold">{bookData.name}</h1>
-      <p className="text-lg">{bookData.author}</p>
+      <h1 className="text-3xl font-bold">{bookData.title}</h1>
 
       <form action={deleteBookWithId}>
         <button className="rounded-md border p-2 hover:bg-gray-100">

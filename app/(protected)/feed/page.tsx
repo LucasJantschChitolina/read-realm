@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { db } from "@/db/index";
-import { books } from "@/db/schema";
+import { book } from "@/db/schema";
 import { BookItem } from "./book-item";
 
 export default async function ProtectedPage() {
@@ -15,7 +15,7 @@ export default async function ProtectedPage() {
     return redirect("/login");
   }
 
-  const bookData = await db.select().from(books);
+  const bookData = await db.select().from(book);
 
   return (
     <div className="bg-gray-400 h-full p-4 flex gap-4 flex-col">
