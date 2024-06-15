@@ -9,7 +9,7 @@ export const createBook = async (formData: FormData) => {
 
   const title = formData.get("title") as string;
 
-  // await db.insert(book).values({ title }); // todo: add missing values
+  // await db.insert(book).values({ title }); // todo: add missing valuesE
 
   revalidatePath("/feed");
   redirect("/feed");

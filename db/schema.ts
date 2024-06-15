@@ -54,7 +54,7 @@ export type Loan = typeof loan.$inferSelect;
 
 export const category = pgTable("category", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
-  description: varchar("description", { length: 255 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
 });
 
 export type Category = typeof category.$inferSelect;
