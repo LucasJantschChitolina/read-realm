@@ -39,3 +39,14 @@ export const getCategories = async () => {
 
   return await db.select().from(category);
 };
+
+export const getCategory = async (id: string) => {
+  "use server";
+
+  const categories = await db
+    .select()
+    .from(category)
+    .where(eq(category.id, id));
+
+  return categories[0];
+};

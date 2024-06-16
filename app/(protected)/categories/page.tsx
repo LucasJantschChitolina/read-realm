@@ -11,7 +11,7 @@ import {
   TableFooter,
   Table,
 } from "@/components/ui/table";
-import { Plus, TrashIcon } from "lucide-react";
+import { Plus, TrashIcon, Edit } from "lucide-react";
 
 const CategoriesPage = async () => {
   const categories = await getCategories();
@@ -40,7 +40,8 @@ const CategoriesPage = async () => {
         <TableHeader>
           <TableRow>
             <TableHead colSpan={4}>Nome</TableHead>
-            <TableHead className="text-right">Ação</TableHead>
+            <TableHead className="text-right">Editar</TableHead>
+            <TableHead className="text-right">Excluir</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -50,10 +51,16 @@ const CategoriesPage = async () => {
                 {category.name}
               </TableCell>
               <TableCell className="text-right">
+                <Button asChild variant="outline" size="icon">
+                  <Link href={`/categories/${category.id}/edit`}>
+                    <Edit className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </TableCell>
+              <TableCell className="text-right">
                 <form action={deleteCategoryWithId}>
                   <input type="hidden" name="id" value={category.id} />
-
-                  <Button variant="outline" size="icon">
+                  <Button variant="destructive" size="icon">
                     <TrashIcon className="h-4 w-4" />
                   </Button>
                 </form>
@@ -64,7 +71,9 @@ const CategoriesPage = async () => {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={4}>Total</TableCell>
-            <TableCell className="text-right">{categories.length}</TableCell>
+            <TableCell className="text-right" colSpan={2}>
+              {categories.length}
+            </TableCell>
           </TableRow>
         </TableFooter>
         <TableCaption>Uma lista das categorias cadastradas.</TableCaption>
