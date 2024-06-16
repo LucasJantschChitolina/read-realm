@@ -1,22 +1,27 @@
 <a>
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
+  <h1 align="center">Read Realm</h1>
 </a>
 
 <br/>
 
-If you wish to just develop locally, [follow the steps below](#clone-and-run-locally).
+## UI
 
-## Clone and run locally
+Inspiração: BookBase - Digital Book Library Dashboard by [Kazeem Adebola Idris
+](https://dribbble.com/pkaidris)
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+![Imagem](./public/ui-inspiration.png)
 
-2. Use `cd` to change into the app's directory
+## Clone e rode localmente
+
+1. Primeiro você vai precisar de um projeto Supabase que pode ser feito [pela dashboard do Supabase](https://database.new)
+
+2. Use `cd` para entrar no diretório da aplicação
 
    ```bash
    cd read-realm
    ```
 
-3. Rename `.env.local.example` to `.env` and update the following:
+3. Renomeie `.env.local.example` to `.env` e atualize as seguintes variáveis
 
    ```
    NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
@@ -24,25 +29,19 @@ If you wish to just develop locally, [follow the steps below](#clone-and-run-loc
    DATABASE_URL=[INSERT SUPABASE CONNECTION STRING]
    ```
 
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
+   Ambas `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` podem ser encontradas nas [configurações de API do seu projeto Supabase](https://app.supabase.com/project/_/settings/api)
 
-4. You can now run the Next.js local development server:
+4. Agora, você pode rodar o projeto Next.js localmente com o seu servidor de desenvolvimento:
 
    ```bash
    npm run dev
    ```
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+   A aplicação deve estar rodando em: [localhost:3000](http://localhost:3000/).
 
-## More Supabase examples
+## Fundamentos de Next.js
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+Alguns fundamentos importantes para entender do Next.js:
 
-## UI
-
-Inpiration: BookBase - Digital Book Library Dashboard by [Kazeem Adebola Idris
-](https://dribbble.com/pkaidris)
-
-![Imagem](./public/ui-inspiration.png)
+- https://www.youtube.com/watch?v=6JnkwfrAI-U&t=725s
+- https://www.youtube.com/watch?v=DAd01mYiURo
