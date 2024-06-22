@@ -54,7 +54,7 @@ export default function NavBar() {
         Livros
       </NavBarItem>
       <NavBarItem
-        href="/teste"
+        href="/publishers"
         icon={<Edit className="text-white" size={16} />}
       >
         Editoras
