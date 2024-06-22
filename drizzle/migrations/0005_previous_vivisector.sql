@@ -1,0 +1,1 @@
+ALTER TABLE "loan" ADD COLUMN "status" varchar(10) NOT NULL;

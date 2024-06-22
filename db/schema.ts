@@ -41,6 +41,7 @@ export const loan = pgTable("loan", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
   loanDate: date("loan_date").notNull(),
   dueDate: date("due_date").notNull(),
+  status: varchar("status", { length: 10 }).notNull(), // "borrowed", "returned", "overdue" // todo: adicionar na modelagem
   returnDate: date("return_date").notNull(),
   bookId: uuid("book_id")
     .references(() => book.id)
@@ -81,18 +82,14 @@ export const student = pgTable("student", {
 export type Student = typeof student.$inferSelect;
 
 export const person = pgTable("person", {
-  id: uuid("uuid1").defaultRandom().primaryKey(),
+  id: uuid("uuid1").defaultRandom().primaryKey(), //todo mudar modelagem das primary keys para string uuid
   name: varchar("name", { length: 255 }).notNull(),
-  type: integer("type").notNull(),
+  type: varchar("type", { length: 10 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
   password: varchar("password", { length: 255 }).notNull(),
   phone: varchar("phone", { length: 255 }).notNull(),
-  studentId: uuid("student_id")
-    .references(() => student.enrollment)
-    .notNull(),
-  adminId: uuid("admin_id")
-    .references(() => admin.id)
-    .notNull(),
+  studentEnrollment: uuid("student_id").references(() => student.enrollment),
+  adminId: uuid("admin_id").references(() => admin.id),
 });
 
 export type Person = typeof person.$inferSelect;
