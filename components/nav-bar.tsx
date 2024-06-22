@@ -60,7 +60,7 @@ export default function NavBar() {
         Editoras
       </NavBarItem>
       <NavBarItem
-        href="/teste"
+        href="/authors"
         icon={<BookOpenText className="text-white" size={16} />}
       >
         Autores
