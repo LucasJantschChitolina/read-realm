@@ -78,7 +78,7 @@ export default function NavBar() {
         Pessoas
       </NavBarItem>
       <NavBarItem
-        href="/teste"
+        href="/people"
         icon={<LibraryBig className="text-white" size={16} />}
       >
         Categorias

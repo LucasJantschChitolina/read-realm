@@ -18,7 +18,7 @@ const AuthorEdit = async ({ params }: { params: { id: string } }) => {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="name">Nome</Label>
-              <Input name="name" type="text" placeholder="Insira aqui o nome" />
+              <Input name="name" type="text" defaultValue={authorData.name} placeholder="Insira aqui o nome" />
             </div>
 
             <div className="flex justify-end mt-4">
