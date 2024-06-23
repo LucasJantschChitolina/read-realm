@@ -21,24 +21,10 @@ import { createBook } from "../actions";
 import { getPublishers } from "../../publishers/actions";
 import { getCategories } from "../../categories/actions";
 import { getAuthors } from "../../authors/actions";
-import { cn } from "@/lib/utils";
-import React from "react";
 
-const FormItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLProps<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex flex-col gap-2", className)} {...props} />
-));
-
-const FormSection = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLProps<HTMLDivElement>
->(({ className, children, ...props }, ref) => (
-  <div ref={ref} className={cn("grid grid-cols-1 gap-4", className)} {...props}>
-    {children}
-  </div>
-));
+import FormItem from "@/components/form-item";
+import FormSection from "@/components/form-section";
+import UploadCover from "./upload-cover";
 
 const CreateBook = async () => {
   const publishers = await getPublishers();
@@ -198,15 +184,7 @@ const CreateBook = async () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <FormItem className="mb-2">
-                  <Label htmlFor="cover">Capa</Label>
-                  <Input
-                    name="cover"
-                    type="text"
-                    placeholder="Insira a URL da capa do livro"
-                  />
-                </FormItem>
-
+                <UploadCover />
                 {/* <div className="grid gap-2">
                   <Image
                     alt="Product image"
