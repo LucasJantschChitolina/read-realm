@@ -50,6 +50,13 @@
       "when": 1719065658049,
       "tag": "0005_previous_vivisector",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1719080613182,
+      "tag": "0006_cloudy_black_crow",
+      "breakpoints": true
     }
   ]
 }

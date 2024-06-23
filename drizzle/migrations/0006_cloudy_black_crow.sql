@@ -1,0 +1,1 @@
+ALTER TABLE "book" ADD COLUMN "cover" varchar(255) NOT NULL;

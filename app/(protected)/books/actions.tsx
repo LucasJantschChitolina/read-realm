@@ -1,5 +1,5 @@
 import { db } from "@/db/index";
-import { book } from "@/db/schema";
+import { BookInsert, book } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -8,8 +8,29 @@ export const createBook = async (formData: FormData) => {
   "use server";
 
   const title = formData.get("title") as string;
+  const year = formData.get("year") as string;
+  const pages = formData.get("pages") as string;
+  const edition = formData.get("edition") as string;
+  const summary = formData.get("summary") as string;
+  const copies = formData.get("copies") as string;
+  const cover = formData.get("cover") as string;
+  const categoryId = formData.get("category") as string;
+  const publisherId = formData.get("publisher") as string;
 
-  // await db.insert(book).values({ title }); // todo: add missing valuesE
+  const bookData: BookInsert = {
+    title,
+    year: Number(year),
+    pages: Number(pages),
+    edition: Number(edition),
+    summary,
+    copies: Number(copies),
+    cover,
+    categoryId,
+    publisherId,
+    borrowed: false,
+  };
+
+  await db.insert(book).values(bookData);
 
   revalidatePath("/feed");
   redirect("/feed");

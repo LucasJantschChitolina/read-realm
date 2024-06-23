@@ -71,16 +71,10 @@ export default function NavBar() {
         Categorias
       </NavBarItem>
       <NavBarItem
-        href="/teste"
+        href="/people"
         icon={<Users className="text-white" size={16} />}
       >
         Pessoas
-      </NavBarItem>
-      <NavBarItem
-        href="/people"
-        icon={<LibraryBig className="text-white" size={16} />}
-      >
-        Categorias
       </NavBarItem>
       <NavBarItem
         href="/teste"

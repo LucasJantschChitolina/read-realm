@@ -16,6 +16,7 @@ export const book = pgTable("book", {
   summary: varchar("summary", { length: 255 }).notNull(),
   borrowed: boolean("borrowed").default(false),
   copies: integer("copies").notNull(),
+  cover: varchar("cover", { length: 255 }).notNull(), //todo: add on modelling
   categoryId: uuid("category_id")
     .references(() => category.id)
     .notNull(),
@@ -25,6 +26,7 @@ export const book = pgTable("book", {
 });
 
 export type Book = typeof book.$inferSelect;
+export type BookInsert = typeof book.$inferInsert;
 
 export const bookAuthor = pgTable("book_author", {
   bookId: uuid("book_id")
