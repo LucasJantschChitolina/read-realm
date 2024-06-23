@@ -1,6 +1,11 @@
-import { createBook } from "../actions";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -10,12 +15,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import React from "react";
+import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
+import { createBook } from "../actions";
 import { getPublishers } from "../../publishers/actions";
 import { getCategories } from "../../categories/actions";
-import { Textarea } from "@/components/ui/textarea";
-import { UploadCover } from "./upload-cover";
+import { getAuthors } from "../../authors/actions";
+import { cn } from "@/lib/utils";
+import React from "react";
 
 const FormItem = React.forwardRef<
   HTMLDivElement,
@@ -36,117 +43,200 @@ const FormSection = React.forwardRef<
 const CreateBook = async () => {
   const publishers = await getPublishers();
   const categories = await getCategories();
+  const authors = await getAuthors();
 
   return (
-    <div className="p-4 flex gap-2 flex-col">
-      <h1 className="font-bold text-3xl">Adicionar Livro</h1>
+    <main className="grid items-start gap-4 px-4 pb-4">
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold text-3xl">Cadastrar livro</h1>
 
-      <form action={createBook}>
-        <Card className="p-4 flex flex-col gap-4">
-          <FormSection className="grid grid-cols-5">
-            <FormItem className="col-span-3">
-              <Label htmlFor="title">Título</Label>
-              <Input
-                name="title"
-                type="text"
-                placeholder="Insira o título do livro"
-              />
-            </FormItem>
+        <Button type="submit">Cadastrar</Button>
+      </div>
 
-            <FormItem className="col-span-2">
-              <Label htmlFor="publisher">Editora</Label>
-              <Select name="publisher">
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione a editora" />
-                </SelectTrigger>
-                <SelectContent>
-                  {publishers.map((publisher) => (
-                    <SelectItem key={publisher.id} value={publisher.id}>
-                      {publisher.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          </FormSection>
+      <form
+        className="mx-auto grid flex-1 auto-rows-max gap-4 w-full"
+        action={createBook}
+      >
+        <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
+          <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+            <Card x-chunk="dashboard-07-chunk-0">
+              <CardHeader>
+                <CardTitle>Detalhes do Livro</CardTitle>
+                <CardDescription>
+                  Aqui você pode adicionar informações sobre o livro que está
+                  sendo cadastrado.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-4">
+                <FormSection className="grid gap-6">
+                  <FormItem>
+                    <Label htmlFor="title">Título</Label>
+                    <Input
+                      name="title"
+                      type="text"
+                      placeholder="Insira o título do livro"
+                    />
+                  </FormItem>
+                </FormSection>
 
-          <FormSection className="grid grid-cols-4">
-            <FormItem>
-              <Label htmlFor="pages">Páginas</Label>
-              <Input
-                name="pages"
-                type="number"
-                placeholder="Número de páginas"
-              />
-            </FormItem>
+                <FormSection className="grid-cols-2">
+                  <FormItem>
+                    <Label htmlFor="category">Categoria</Label>
+                    <Select name="category">
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecione a categoria" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
 
-            <FormItem>
-              <Label htmlFor="year">Ano</Label>
-              <Input name="year" type="number" placeholder="Ano" />
-            </FormItem>
+                  <FormItem>
+                    <Label htmlFor="edition">Edição</Label>
+                    <Input
+                      name="edition"
+                      type="number"
+                      placeholder="Número da edição"
+                    />
+                  </FormItem>
+                </FormSection>
 
-            <FormItem>
-              <Label htmlFor="edition">Edição</Label>
-              <Input
-                name="edition"
-                type="number"
-                placeholder="Número da edição"
-              />
-            </FormItem>
+                <FormSection className="grid-cols-3">
+                  <FormItem>
+                    <Label htmlFor="pages">Páginas</Label>
+                    <Input
+                      name="pages"
+                      type="number"
+                      placeholder="Número de páginas"
+                    />
+                  </FormItem>
 
-            <FormItem>
-              <Label htmlFor="copies">Cópias</Label>
-              <Input
-                name="copies"
-                type="number"
-                placeholder="Número de cópias"
-              />
-            </FormItem>
-          </FormSection>
+                  <FormItem>
+                    <Label htmlFor="year">Ano</Label>
+                    <Input
+                      name="year"
+                      type="number"
+                      placeholder="Ano"
+                      defaultValue="2024"
+                    />
+                  </FormItem>
 
-          <FormSection>
-            <FormItem>
-              <Label htmlFor="category">Categoria</Label>
-              <Select name="category">
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Selecione a categoria" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormItem>
-          </FormSection>
+                  <FormItem>
+                    <Label htmlFor="copies">Cópias</Label>
+                    <Input
+                      name="copies"
+                      type="number"
+                      placeholder="Número de cópias"
+                    />
+                  </FormItem>
+                </FormSection>
 
-          <FormSection className="grid grid-cols-5">
-            <FormItem className="col-span-3">
-              <Label htmlFor="summary">Resumo</Label>
-              <Textarea
-                name="summary"
-                className="h-full"
-                placeholder="Insira o resumo do livro"
-              />
-            </FormItem>
+                <FormSection>
+                  <FormItem>
+                    <Label htmlFor="description">Resumo</Label>
+                    <Textarea
+                      name="summary"
+                      className="min-h-32"
+                      placeholder="Insira o resumo do livro"
+                    />
+                  </FormItem>
+                </FormSection>
+              </CardContent>
+            </Card>
+            <Card x-chunk="dashboard-07-chunk-3">
+              <CardHeader>
+                <CardTitle>Informações da edição</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <FormSection className="grid grid-cols-2">
+                  <FormItem>
+                    <Label htmlFor="publisher">Editora</Label>
+                    <Select name="publisher">
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecione a editora" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {publishers.map((publisher) => (
+                          <SelectItem key={publisher.id} value={publisher.id}>
+                            {publisher.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
 
-            <FormItem className="col-span-2">
-              <Label htmlFor="cover">Capa</Label>
-              <Input
-                name="cover"
-                type="url"
-                placeholder="Insira a capa do livro"
-                className="h-full"
-              />
-            </FormItem>
-          </FormSection>
+                  <FormItem>
+                    <Label htmlFor="author">Autor</Label>
+                    <Select name="author">
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecione o autor" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {authors.map((author) => (
+                          <SelectItem key={author.id} value={author.id}>
+                            {author.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                </FormSection>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+            <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
+              <CardHeader>
+                <CardTitle>Capa do Livro</CardTitle>
+                <CardDescription>
+                  A capa do livro é a primeira impressão que o leitor tem do
+                  livro.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <FormItem className="mb-2">
+                  <Label htmlFor="cover">Capa</Label>
+                  <Input
+                    name="cover"
+                    type="text"
+                    placeholder="Insira a URL da capa do livro"
+                  />
+                </FormItem>
 
-          <Button type="submit">Create</Button>
-        </Card>
+                <div className="grid gap-2">
+                  <Image
+                    alt="Product image"
+                    className="aspect-[8/10] w-full rounded-md object-cover"
+                    height={250}
+                    src="https://m.media-amazon.com/images/I/51RfC2gDwuL._SY445_SX342_.jpg"
+                    width={250}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+            {/* <Card x-chunk="dashboard-07-chunk-5">
+              <CardHeader>
+                <CardTitle>Archive Product</CardTitle>
+                <CardDescription>
+                  Lipsum dolor sit amet, consectetur adipiscing elit.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div></div>
+                <Button size="sm" variant="secondary">
+                  Archive Product
+                </Button>
+              </CardContent>
+            </Card> */}
+          </div>
+        </div>
       </form>
-    </div>
+    </main>
   );
 };
 

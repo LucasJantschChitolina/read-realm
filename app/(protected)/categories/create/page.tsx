@@ -8,7 +8,7 @@ const CreateCategory = () => {
   return (
     <div className="p-4 flex gap-4 flex-col">
       <form action={createCategory} className="space-y-4">
-        <h1 className="font-bold text-3xl">Criar categoria</h1>
+        <h1 className="font-bold text-3xl">Cadastrar categoria</h1>
 
         <Card className="p-4 flex flex-col gap-4">
           <div className="flex flex-col gap-4">
