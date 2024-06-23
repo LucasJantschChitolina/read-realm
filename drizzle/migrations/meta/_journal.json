@@ -57,6 +57,20 @@
       "when": 1719080613182,
       "tag": "0006_cloudy_black_crow",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1719152011818,
+      "tag": "0007_happy_wonder_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1719152397204,
+      "tag": "0008_aberrant_shockwave",
+      "breakpoints": true
     }
   ]
 }

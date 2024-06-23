@@ -39,14 +39,22 @@ export const bookAuthor = pgTable("book_author", {
 
 export type BookAuthor = typeof bookAuthor.$inferSelect;
 
+export type BookCopy = typeof bookCopy.$inferSelect;
+
+export const bookCopy = pgTable("book_copy", {
+  id: uuid("uuid1").defaultRandom().primaryKey(),
+bookId: uuid("book_id").references(() => book.id),
+});
+
+
 export const loan = pgTable("loan", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
   loanDate: date("loan_date").notNull(),
   dueDate: date("due_date").notNull(),
   status: varchar("status", { length: 10 }).notNull(), // "borrowed", "returned", "overdue" // todo: adicionar na modelagem
   returnDate: date("return_date").notNull(),
-  bookId: uuid("book_id")
-    .references(() => book.id)
+  bookCopyId: uuid("bookCopy_id")
+    .references(() => bookCopy.id)
     .notNull(),
   personId: uuid("person_id")
     .references(() => person.id)
@@ -84,12 +92,13 @@ export const student = pgTable("student", {
 export type Student = typeof student.$inferSelect;
 
 export const person = pgTable("person", {
-  id: uuid("uuid1").defaultRandom().primaryKey(), //todo mudar modelagem das primary keys para string uuid
+  id: uuid("uuid1").defaultRandom().primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   type: varchar("type", { length: 10 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
   password: varchar("password", { length: 255 }).notNull(),
   phone: varchar("phone", { length: 255 }).notNull(),
+  status: varchar("status", { length: 10 }).notNull(),
   studentEnrollment: uuid("student_id").references(() => student.enrollment),
   adminId: uuid("admin_id").references(() => admin.id),
 });
