@@ -15,26 +15,27 @@ export const createPerson = async (formData: FormData) => {
   const password = formData.get("password") as string;
   const phone = formData.get("phone") as string;
 
-  if (type === 'admin') {
-    const adminInsertResponse = await db.insert(admin).values({}).returning();
-    const adminId = String(adminInsertResponse[0].id);
-    console.log(adminId)
-
-    await db.insert(person).values({
-      email, name, password, phone, type, adminId
-    });
-  }
-
-  if (type === 'student') {
-    const studentInsertResponse = await db.insert(student).values({ name }).returning();
-    const studentEnrollment = studentInsertResponse[0].enrollment;
-
-    await db.insert(person).values({
-      email, name, password, phone, type, studentEnrollment
-    });
-  }
-
-
+  await db.transaction(async (tx) => {
+    if (type === 'admin') {
+      const adminInsertResponse = await tx.insert(admin).values({}).returning();
+      const adminId = String(adminInsertResponse[0].id);
+      console.log(adminId)
+  
+      await tx.insert(person).values({
+        email, name, password, phone, type, adminId
+      });
+    }
+  
+    if (type === 'student') {
+      const studentInsertResponse = await tx.insert(student).values({ name }).returning();
+      const studentEnrollment = studentInsertResponse[0].enrollment;
+  
+      await tx.insert(person).values({
+        email, name, password, phone, type, studentEnrollment
+      });
+    }
+  
+  });
 
   revalidatePath("/people");
   redirect("/people");
