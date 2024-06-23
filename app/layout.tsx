@@ -1,5 +1,6 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import { ThemeProvider } from "./theme-provider"
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -18,11 +19,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
-        <main className="w-screen h-screen flex flex-row justify-center">
-          {children}
-        </main>
-      </body>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <body className="bg-background text-foreground">
+          <main className="w-screen h-screen flex flex-row justify-center">
+            {children}
+          </main>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }

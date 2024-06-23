@@ -2,6 +2,7 @@ import AuthButton from "@/components/auth-button";
 import NavBar from "@/components/nav-bar";
 import { ReactNode } from "react";
 import AppBreadcrumb from "./components/breadcrumb";
+import { ModeToggle } from "@/components/theme-toggle";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -13,7 +14,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
             <h1 className="font-bold">Read Realm</h1>
             <AppBreadcrumb />
           </div>
-          <AuthButton />
+          <div className="flex gap-4">
+            <AuthButton />
+            <ModeToggle />
+          </div>
         </header>
         {children}
       </div>
