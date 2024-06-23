@@ -18,11 +18,11 @@ export default async function ProtectedPage() {
   const bookData = await db.select().from(book);
 
   return (
-    <div className="bg-gray-400 h-full p-4 flex gap-4 flex-col">
-      <h1 className="text-3xl font-semibold">feed</h1>
+    <div className="bg-gray-100 h-full p-4 flex gap-4 flex-col">
+      <h1 className="text-3xl font-semibold">Feed</h1>
 
       {bookData && (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-6 gap-4">
           {bookData.map((book) => (
             <BookItem {...book} />
           ))}

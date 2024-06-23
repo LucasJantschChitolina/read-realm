@@ -22,7 +22,7 @@ interface ItemProps {
 function NavBarItem(props: ItemProps) {
   return (
     <Link
-      className="hover:bg-slate-100 duration-200 py-2 px-3 rounded-md flex gap-2 items-center"
+      className="hover:bg-gray-100 duration-200 py-2 px-3 rounded-md flex gap-2 items-center"
       href={props.href}
     >
       <span
@@ -39,7 +39,7 @@ function NavBarItem(props: ItemProps) {
 
 export default function NavBar() {
   return (
-    <nav className="h-full bg-slate-50 w-64 p-4 flex flex-col gap-4 font-medium">
+    <nav className="h-full bg-gray-50 w-64 p-4 flex flex-col gap-4 font-medium">
       <NavBarItem
         href="/feed"
         active
@@ -72,16 +72,10 @@ export default function NavBar() {
         Categorias
       </NavBarItem>
       <NavBarItem
-        href="/teste"
+        href="/people"
         icon={<Users className="text-white" size={16} />}
       >
         Pessoas
-      </NavBarItem>
-      <NavBarItem
-        href="/people"
-        icon={<LibraryBig className="text-white" size={16} />}
-      >
-        Categorias
       </NavBarItem>
       <NavBarItem
         href="/teste"
