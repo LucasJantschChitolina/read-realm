@@ -16,11 +16,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
-import { createBook } from "../actions";
-import { getPublishers } from "../../publishers/actions";
-import { getCategories } from "../../categories/actions";
-import { getAuthors } from "../../authors/actions";
+
+import { createBook } from "@/app/(protected)/books/actions";
+import { getPublishers } from "@/app/(protected)/publishers/actions";
+import { getCategories } from "@/app/(protected)/categories/actions";
+import { getAuthors } from "@/app/(protected)/authors/actions";
 
 import FormItem from "@/components/form-item";
 import FormSection from "@/components/form-section";
@@ -60,6 +60,7 @@ const CreateBook = async () => {
                       name="title"
                       type="text"
                       placeholder="Insira o título do livro"
+                      required
                     />
                   </FormItem>
                 </FormSection>
@@ -67,7 +68,7 @@ const CreateBook = async () => {
                 <FormSection className="grid-cols-2">
                   <FormItem>
                     <Label htmlFor="category">Categoria</Label>
-                    <Select name="category">
+                    <Select name="category" required>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Selecione a categoria" />
                       </SelectTrigger>
@@ -87,6 +88,7 @@ const CreateBook = async () => {
                       name="edition"
                       type="number"
                       placeholder="Número da edição"
+                      required
                     />
                   </FormItem>
                 </FormSection>
@@ -98,6 +100,7 @@ const CreateBook = async () => {
                       name="pages"
                       type="number"
                       placeholder="Número de páginas"
+                      required
                     />
                   </FormItem>
 
@@ -108,6 +111,7 @@ const CreateBook = async () => {
                       type="number"
                       placeholder="Ano"
                       defaultValue="2024"
+                      required
                     />
                   </FormItem>
 
@@ -117,6 +121,7 @@ const CreateBook = async () => {
                       name="copies"
                       type="number"
                       placeholder="Número de cópias"
+                      required
                     />
                   </FormItem>
                 </FormSection>
@@ -128,6 +133,7 @@ const CreateBook = async () => {
                       name="summary"
                       className="min-h-32"
                       placeholder="Insira o resumo do livro"
+                      required
                     />
                   </FormItem>
                 </FormSection>
@@ -141,7 +147,7 @@ const CreateBook = async () => {
                 <FormSection className="grid grid-cols-2">
                   <FormItem>
                     <Label htmlFor="publisher">Editora</Label>
-                    <Select name="publisher">
+                    <Select name="publisher" required>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Selecione a editora" />
                       </SelectTrigger>
@@ -157,7 +163,7 @@ const CreateBook = async () => {
 
                   <FormItem>
                     <Label htmlFor="author">Autor</Label>
-                    <Select name="author">
+                    <Select name="author" required>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Selecione o autor" />
                       </SelectTrigger>
@@ -185,31 +191,8 @@ const CreateBook = async () => {
               </CardHeader>
               <CardContent>
                 <UploadCover />
-                {/* <div className="grid gap-2">
-                  <Image
-                    alt="Product image"
-                    className="aspect-[8/10] w-full rounded-md object-cover"
-                    height={250}
-                    src="https://m.media-amazon.com/images/I/51RfC2gDwuL._SY445_SX342_.jpg"
-                    width={250}
-                  />
-                </div> */}
               </CardContent>
             </Card>
-            {/* <Card x-chunk="dashboard-07-chunk-5">
-              <CardHeader>
-                <CardTitle>Archive Product</CardTitle>
-                <CardDescription>
-                  Lipsum dolor sit amet, consectetur adipiscing elit.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div></div>
-                <Button size="sm" variant="secondary">
-                  Archive Product
-                </Button>
-              </CardContent>
-            </Card> */}
           </div>
         </div>
       </form>
