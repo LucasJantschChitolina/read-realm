@@ -85,3 +85,10 @@ export const getPerson = async (id: string) => {
 
   return people[0];
 };
+
+export const getStudents = async () => {
+  "use server";
+
+  return await db.select().from(person).where(eq(person.type, 'student'));
+};
+
