@@ -14,7 +14,6 @@ export const book = pgTable("book", {
   pages: integer("pages").notNull(),
   edition: integer("edition").notNull(),
   summary: varchar("summary", { length: 255 }).notNull(),
-  borrowed: boolean("borrowed").default(false),
   copies: integer("copies").notNull(),
   cover: varchar("cover", { length: 255 }).notNull(), //todo: add on modelling
   categoryId: uuid("category_id")
@@ -42,6 +41,7 @@ export type BookAuthor = typeof bookAuthor.$inferSelect;
 export const bookCopy = pgTable("book_copy", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
   bookId: uuid("book_id").references(() => book.id),
+  borrowed: boolean("borrowed").default(false),
 });
 
 export type BookCopy = typeof bookCopy.$inferSelect;
