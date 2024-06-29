@@ -1,0 +1,1 @@
+ALTER TABLE "person" ALTER COLUMN "student_enrollment" SET DATA TYPE varchar(255);

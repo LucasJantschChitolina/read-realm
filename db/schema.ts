@@ -52,7 +52,7 @@ export const loan = pgTable("loan", {
   dueDate: date("due_date").notNull(),
   status: varchar("status", { length: 10 }).notNull(), // "borrowed", "returned", "overdue" // todo: adicionar na modelagem
   returnDate: date("return_date").notNull(),
-  bookCopyId: uuid("bookCopy_id")
+  bookCopyId: uuid("book_copy_id")
     .references(() => bookCopy.id)
     .notNull(),
   personId: uuid("person_id")
@@ -83,14 +83,6 @@ export const author = pgTable("author", {
 
 export type Author = typeof author.$inferSelect;
 
-export const student = pgTable("student", {
-  id: uuid("uuid1").defaultRandom().primaryKey(),
-  enrollment: varchar("enrollment", { length: 255 }).unique(), //TODO MODELAGEM
-  name: varchar("name", { length: 255 }).notNull(),
-});
-
-export type Student = typeof student.$inferSelect;
-
 export const person = pgTable("person", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
@@ -99,14 +91,7 @@ export const person = pgTable("person", {
   password: varchar("password", { length: 255 }).notNull(),
   phone: varchar("phone", { length: 255 }).notNull(),
   status: varchar("status", { length: 10 }).notNull(),
-  studentEnrollment: uuid("student_id").references(() => student.enrollment),
-  adminId: uuid("admin_id").references(() => admin.id),
+  studentEnrollment: varchar("student_enrollment", { length: 255 }).unique(),
 });
 
 export type Person = typeof person.$inferSelect;
-
-export const admin = pgTable("admin", {
-  id: uuid("uuid1").defaultRandom().primaryKey(),
-});
-
-export type Admin = typeof admin.$inferSelect;
