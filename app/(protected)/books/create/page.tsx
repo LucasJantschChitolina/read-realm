@@ -25,6 +25,7 @@ import { getAuthors } from "@/app/(protected)/authors/actions";
 import FormItem from "@/components/form-item";
 import FormSection from "@/components/form-section";
 import UploadCover from "./upload-cover";
+import MultiSelect from "@/components/ui/multiselect";
 
 const CreateBook = async () => {
   const publishers = await getPublishers();
@@ -163,18 +164,7 @@ const CreateBook = async () => {
 
                   <FormItem>
                     <Label htmlFor="author">Autor</Label>
-                    <Select name="author" required>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Selecione o autor" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {authors.map((author) => (
-                          <SelectItem key={author.id} value={author.id}>
-                            {author.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <MultiSelect options={authors} name="author" required />
                   </FormItem>
                 </FormSection>
               </CardContent>

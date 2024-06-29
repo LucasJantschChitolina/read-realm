@@ -39,13 +39,12 @@ export const bookAuthor = pgTable("book_author", {
 
 export type BookAuthor = typeof bookAuthor.$inferSelect;
 
-export type BookCopy = typeof bookCopy.$inferSelect;
-
 export const bookCopy = pgTable("book_copy", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
-bookId: uuid("book_id").references(() => book.id),
+  bookId: uuid("book_id").references(() => book.id),
 });
 
+export type BookCopy = typeof bookCopy.$inferSelect;
 
 export const loan = pgTable("loan", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
@@ -65,7 +64,7 @@ export type Loan = typeof loan.$inferSelect;
 
 export const category = pgTable("category", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull().unique(),
 });
 
 export type Category = typeof category.$inferSelect;

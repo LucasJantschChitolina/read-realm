@@ -10,8 +10,8 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 const UploadCover = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
-    const [url, setUrl] = useState("");
+  ({ className, type, defaultValue, ...props }, ref) => {
+    const [url, setUrl] = useState(defaultValue || "");
 
     const handleChangeUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
       const url = e.target.value;
@@ -40,7 +40,7 @@ const UploadCover = React.forwardRef<HTMLInputElement, InputProps>(
         </div>
         {url && (
           <Image
-            src={url}
+            src={url.toString()}
             width={250}
             height={250}
             alt="Book Image Preview"
