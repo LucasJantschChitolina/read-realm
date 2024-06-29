@@ -85,7 +85,8 @@ export const author = pgTable("author", {
 export type Author = typeof author.$inferSelect;
 
 export const student = pgTable("student", {
-  enrollment: uuid("uuid1").defaultRandom().primaryKey(),
+  id: uuid("uuid1").defaultRandom().primaryKey(),
+  enrollment: varchar("enrollment", { length: 255 }).unique(), //TODO MODELAGEM
   name: varchar("name", { length: 255 }).notNull(),
 });
 

@@ -77,7 +77,7 @@ export default function NavBar() {
         Pessoas
       </NavBarItem>
       <NavBarItem
-        href="/teste"
+        href="/loans"
         icon={<ShoppingBasket className="text-white" size={16} />}
       >
         Empréstimos

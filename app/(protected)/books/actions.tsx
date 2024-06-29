@@ -51,3 +51,11 @@ export const getBook = async (id: string) => {
 
   return booksData[0];
 };
+
+export const getBooks = async () => {
+  "use server";
+
+  const booksData = await db.select().from(book);
+
+  return booksData;
+};
