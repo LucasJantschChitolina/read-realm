@@ -2,23 +2,22 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import UndrawNoData from "@/public/undraw-no-data";
 import Image from "next/image";
 import React, { useState } from "react";
-
-const DEFAULT_URL = "https://generated.vusercontent.net/placeholder.svg";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 const UploadCover = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
-    const [url, setUrl] = useState(DEFAULT_URL);
+  ({ className, type, defaultValue, ...props }, ref) => {
+    const [url, setUrl] = useState(defaultValue || "");
 
     const handleChangeUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
       const url = e.target.value;
 
       if (!url.startsWith("http")) {
-        return setUrl(DEFAULT_URL);
+        return setUrl("");
       }
 
       setUrl(url);
@@ -30,6 +29,7 @@ const UploadCover = React.forwardRef<HTMLInputElement, InputProps>(
           <Label htmlFor="cover">Capa</Label>
 
           <Input
+            required
             name="cover"
             value={url}
             ref={ref}
@@ -38,20 +38,22 @@ const UploadCover = React.forwardRef<HTMLInputElement, InputProps>(
             onChange={handleChangeUrl}
           />
         </div>
-        <div
-          className={`grid rounded-md ${
-            url === DEFAULT_URL ? "bg-[#f0ecec]" : "bg-transparent"
-          }`}
-        >
+        {url && (
           <Image
-            src={url}
+            src={url.toString()}
             width={250}
             height={250}
             alt="Book Image Preview"
             quality={100}
-            className="aspect-[8/10] w-full rounded-md object-cover"
+            className="aspect-[8/12] w-full rounded-md object-cover"
           />
-        </div>
+        )}
+
+        {!url && (
+          <div className="flex flex-col gap-4 items-center justify-center h-96">
+            <UndrawNoData className="w-32 h-32" />
+          </div>
+        )}
       </div>
     );
   }

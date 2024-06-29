@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import AuthButton from "@/components/auth-button";
 import NavBar from "@/components/nav-bar";
 import { ReactNode } from "react";
@@ -21,6 +22,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         </header>
         {children}
       </div>
+      <Toaster richColors />
     </div>
   );
 };
