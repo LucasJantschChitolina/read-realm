@@ -51,8 +51,6 @@ const EditBookForm = ({
         action={async (formData: FormData) => {
           const updatedBook = await updateBook(book.id, formData);
 
-          console.log({ updatedBook });
-
           if (updatedBook.status === "error")
             return toast.error(updatedBook.message);
 

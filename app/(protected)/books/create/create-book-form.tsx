@@ -42,7 +42,7 @@ const CreateBookForm = ({
   const router = useRouter();
 
   return (
-    <main className="grid items-start gap-4 px-4 pb-4 bg-blue-500">
+    <main className="grid items-start gap-4 px-4 pb-4">
       <form
         className="mx-auto grid flex-1 auto-rows-max gap-4 w-full"
         action={async (formData: FormData) => {
