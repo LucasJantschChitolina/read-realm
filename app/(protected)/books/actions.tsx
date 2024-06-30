@@ -1,7 +1,7 @@
 import { db } from "@/db/index";
 import { BookInsert, book, bookAuthor, bookCopy } from "@/db/schema";
 import { ActionResponse } from "@/types";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -132,15 +132,26 @@ export const updateBook = async (
     };
 
     await db.transaction(async (tx) => {
+      // todo: review the deletion of book authors will cause conflicts if already is related to a book
       await tx.delete(bookAuthor).where(eq(bookAuthor.bookId, id));
-      await tx.delete(bookCopy).where(eq(bookCopy.bookId, id));
+      await tx
+        .delete(bookCopy)
+        .where(and(eq(bookCopy.bookId, id), eq(bookCopy.borrowed, false)));
 
       authorIdArray.forEach(async (authorId) => {
         await tx.insert(bookAuthor).values({ bookId: id, authorId });
       });
 
+      const alreadyInsertedCopies = await tx
+        .select()
+        .from(bookCopy)
+        .where(eq(bookCopy.bookId, id));
+
+      //todo: solve later gives bug if setting number of copies to 0
+      const copiesToInsert = Number(copies) - alreadyInsertedCopies.length;
+
       // todo: review the creation of book copies
-      Array.from({ length: Number(copies) }).forEach(async () => {
+      Array.from({ length: copiesToInsert }).forEach(async () => {
         await tx.insert(bookCopy).values({ bookId: id });
       });
 
@@ -150,6 +161,7 @@ export const updateBook = async (
     revalidatePath("/feed");
     return { status: "success", message: "Livro atualizado com sucesso" };
   } catch (error) {
+    console.log("Error updating book: ", error);
     return { status: "error", message: "Erro ao atualizar livro" };
   }
 };
