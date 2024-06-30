@@ -11,19 +11,12 @@ import {
   TableFooter,
   Table,
 } from "@/components/ui/table";
-import { Plus, TrashIcon, Edit } from "lucide-react";
+import { Plus, Edit } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import DeleteButton from "@/components/delete-button";
 
 const PeoplePage = async () => {
   const people = await getPeople();
-
-  const deletePersonWithId = async (formData: FormData) => {
-    "use server";
-
-    const id = formData.get("id") as string;
-
-    await deletePerson(id);
-  };
 
   return (
     <div className="p-4 space-y-4">
@@ -41,7 +34,8 @@ const PeoplePage = async () => {
         <TableHeader>
           <TableRow>
             <TableHead colSpan={1}>Nome</TableHead>
-            <TableHead colSpan={1}>Tipo</TableHead>
+            <TableHead colSpan={1}>Matrícula</TableHead>
+            <TableHead colSpan={1}>Status</TableHead>
             <TableHead colSpan={1}>Email</TableHead>
             <TableHead className="text-right">Editar</TableHead>
             <TableHead className="text-right">Excluir</TableHead>
@@ -54,7 +48,16 @@ const PeoplePage = async () => {
                 {person.name}
               </TableCell>
               <TableCell className="font-medium" colSpan={1}>
-                <Badge className={person.type === 'admin' ? 'bg-red-600' : 'bg-green-600'}>{person.type}</Badge>
+                <Badge variant="outline">{person.studentEnrollment}</Badge>
+              </TableCell>
+              <TableCell className="font-medium" colSpan={1}>
+                <Badge
+                  variant={
+                    person.status === "active" ? "secondary" : "destructive"
+                  }
+                >
+                  {person.status === "active" ? "Ativo" : "Inativo"}
+                </Badge>
               </TableCell>
               <TableCell className="font-medium" colSpan={1}>
                 {person.email}
@@ -67,19 +70,18 @@ const PeoplePage = async () => {
                 </Button>
               </TableCell>
               <TableCell className="text-right">
-                <form action={deletePersonWithId}>
-                  <input type="hidden" name="id" value={person.id} />
-                  <Button variant="destructive" size="icon">
-                    <TrashIcon className="h-4 w-4" />
-                  </Button>
-                </form>
+                <DeleteButton
+                  deleteFn={deletePerson}
+                  id={person.id}
+                  redirectAfterDelete="people"
+                />
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell colSpan={5}>Total</TableCell>
             <TableCell className="text-right" colSpan={1}>
               {people.length}
             </TableCell>

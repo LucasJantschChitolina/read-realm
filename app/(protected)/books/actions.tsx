@@ -98,9 +98,9 @@ export const updateBook = async (
   id: string,
   formData: FormData
 ): Promise<ActionResponse> => {
-  try {
-    ("use server");
+  "use server";
 
+  try {
     const title = formData.get("title") as string;
     const year = formData.get("year") as string;
     const pages = formData.get("pages") as string;

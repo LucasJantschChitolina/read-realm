@@ -1,9 +1,8 @@
 import { db } from "@/db";
-import { category } from "@/db/schema";
+import { book, category } from "@/db/schema";
 import { ActionResponse } from "@/types";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export const createCategory = async (
   formData: FormData
@@ -25,16 +24,22 @@ export const createCategory = async (
   }
 };
 
-export const deleteCategory = async (id: string) => {
+export const deleteCategory = async (id: string): Promise<ActionResponse> => {
   "use server";
 
   try {
+    const isUsed = await db.select().from(book).where(eq(book.categoryId, id));
+
+    if (isUsed.length > 0)
+      return { status: "error", message: "Categoria está sendo usada." };
+
     await db.delete(category).where(eq(category.id, id));
 
     revalidatePath("/categories");
-    redirect("/categories");
+    return { status: "success", message: "Categoria deletada com sucesso." };
   } catch (error) {
     console.log("Error: ", error);
+    return { status: "error", message: "Erro ao deletar categoria" };
   }
 };
 

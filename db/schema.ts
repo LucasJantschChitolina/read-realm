@@ -51,7 +51,7 @@ export const loan = pgTable("loan", {
   loanDate: date("loan_date").notNull(),
   dueDate: date("due_date").notNull(),
   status: varchar("status", { length: 10 }).notNull(), // "borrowed", "returned", "overdue" // todo: adicionar na modelagem
-  returnDate: date("return_date").notNull(),
+  returnDate: date("return_date"),
   bookCopyId: uuid("book_copy_id")
     .references(() => bookCopy.id)
     .notNull(),
@@ -86,12 +86,12 @@ export type Author = typeof author.$inferSelect;
 export const person = pgTable("person", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
-  type: varchar("type", { length: 10 }).notNull(),
-  email: varchar("email", { length: 255 }).notNull(),
-  password: varchar("password", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).unique(),
   phone: varchar("phone", { length: 255 }).notNull(),
   status: varchar("status", { length: 10 }).notNull(),
-  studentEnrollment: varchar("student_enrollment", { length: 255 }).unique(),
+  studentEnrollment: varchar("student_enrollment", { length: 255 })
+    .unique()
+    .notNull(),
 });
 
 export type Person = typeof person.$inferSelect;

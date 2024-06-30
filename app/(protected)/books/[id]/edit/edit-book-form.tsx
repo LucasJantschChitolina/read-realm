@@ -33,14 +33,14 @@ const EditBookForm = ({
   publishers,
   authors,
   bookAuthors,
-  updateBookWithId,
+  updateBook,
 }: {
   book: Book;
   categories: Category[];
   publishers: Publisher[];
   authors: Author[];
   bookAuthors: BookAuthor[];
-  updateBookWithId: (formData: FormData) => Promise<ActionResponse>;
+  updateBook: (id: string, formData: FormData) => Promise<ActionResponse>;
 }) => {
   const router = useRouter();
 
@@ -49,7 +49,7 @@ const EditBookForm = ({
       <form
         className="mx-auto grid flex-1 auto-rows-max gap-4 w-full"
         action={async (formData: FormData) => {
-          const updatedBook = await updateBookWithId(formData);
+          const updatedBook = await updateBook(book.id, formData);
 
           if (updatedBook.status === "error")
             return toast.error(updatedBook.message);

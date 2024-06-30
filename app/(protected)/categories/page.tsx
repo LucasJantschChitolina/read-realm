@@ -11,18 +11,11 @@ import {
   TableFooter,
   Table,
 } from "@/components/ui/table";
-import { Plus, TrashIcon, Edit } from "lucide-react";
+import { Plus, Edit } from "lucide-react";
+import DeleteButton from "@/components/delete-button";
 
 const CategoriesPage = async () => {
   const categories = await getCategories();
-
-  const deleteCategoryWithId = async (formData: FormData) => {
-    "use server";
-
-    const id = formData.get("id") as string;
-
-    await deleteCategory(id);
-  };
 
   return (
     <div className="p-4 space-y-4">
@@ -58,12 +51,11 @@ const CategoriesPage = async () => {
                 </Button>
               </TableCell>
               <TableCell className="text-right">
-                <form action={deleteCategoryWithId}>
-                  <input type="hidden" name="id" value={category.id} />
-                  <Button variant="destructive" size="icon">
-                    <TrashIcon className="h-4 w-4" />
-                  </Button>
-                </form>
+                <DeleteButton
+                  deleteFn={deleteCategory}
+                  id={category.id}
+                  redirectAfterDelete="categories"
+                />
               </TableCell>
             </TableRow>
           ))}

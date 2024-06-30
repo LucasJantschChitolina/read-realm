@@ -14,8 +14,6 @@ const EditBook = async ({ params }: { params: { id: string } }) => {
   const categories = await getCategories();
   const authors = await getAuthors();
 
-  const updateBookWithId = updateBook.bind(null, book.id);
-
   return (
     <EditBookForm
       authors={authors}
@@ -23,7 +21,7 @@ const EditBook = async ({ params }: { params: { id: string } }) => {
       publishers={publishers}
       bookAuthors={bookAuthors}
       book={book}
-      updateBookWithId={updateBookWithId}
+      updateBook={updateBook}
     />
   );
 };
