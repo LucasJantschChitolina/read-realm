@@ -1,10 +1,11 @@
 import { getBooks } from "../../books/actions";
 import CreateLoanForm from "./create-loan-form";
-import { createLoan, getPerson } from "../actions";
+import { createLoan } from "../actions";
+import { getPeople } from "../../people/actions";
 
 const CreateLoan = async () => {
   const books = await getBooks();
-  const students = await getPerson();
+  const students = await getPeople();
 
   return (
     <div className="p-4 flex gap-4 flex-col items-center">
