@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { bookCopy, loan, person } from "@/db/schema";
+import { book, bookCopy, loan, person } from "@/db/schema";
 import { ActionResponse } from "@/types";
 import { eq, and, count } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -31,6 +31,18 @@ export const createLoan = async (
     const bookId = formData.get("bookId") as string;
     const personId = formData.get("personId") as string;
     const status = "on_time";
+
+    const isPersonActive = await db
+      .select()
+      .from(person)
+      .where(and(eq(person.id, personId), eq(person.status, "active")));
+
+    if (!isPersonActive.length) {
+      return {
+        status: "error",
+        message: "Aluno inativo. Não é possível realizar empréstimo.",
+      };
+    }
 
     const availableCopy = await db
       .select()
@@ -98,7 +110,10 @@ export const createLoan = async (
 export const getLoans = async () => {
   "use server";
 
-  return await db.select().from(loan);
+  return await db
+    .select()
+    .from(loan)
+    .leftJoin(person, eq(loan.personId, person.id));
 };
 
 export const getLoan = async (id: string) => {

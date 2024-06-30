@@ -11,7 +11,7 @@ import {
   TableFooter,
   Table,
 } from "@/components/ui/table";
-import { Plus, TrashIcon, Edit } from "lucide-react";
+import { Plus } from "lucide-react";
 
 const LoansPage = async () => {
   const loans = await getLoans();
@@ -31,15 +31,22 @@ const LoansPage = async () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead colSpan={4}>Data</TableHead>
-
+            <TableHead colSpan={1}>Data de empréstimo</TableHead>
+            <TableHead colSpan={1}>Data de devolução</TableHead>
+            <TableHead colSpan={1}>Aluno</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {loans.map((loan) => (
-            <TableRow key={loan.id}>
-              <TableCell className="font-medium" colSpan={4}>
-                {loan.loanDate}
+            <TableRow key={loan.loan.id}>
+              <TableCell className="font-medium" colSpan={1}>
+                {loan.loan.loanDate}
+              </TableCell>
+              <TableCell className="font-medium" colSpan={1}>
+                {loan.loan.dueDate}
+              </TableCell>
+              <TableCell className="font-medium" colSpan={1}>
+                {loan?.person?.name}
               </TableCell>
             </TableRow>
           ))}
