@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { admin, person, student } from "@/db/schema";
+import {  person } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -13,29 +13,10 @@ export const createPerson = async (formData: FormData) => {
   const password = formData.get("password") as string;
   const phone = formData.get("phone") as string;
   const status = formData.get("status") as string;
+  const studentEnrollment = formData.get("student_enrollment") as string;
+
 
   await db.transaction(async (tx) => {
-    if (type === "admin") {
-      const adminInsertResponse = await tx.insert(admin).values({}).returning();
-      const adminId = String(adminInsertResponse[0].id);
-
-      await tx.insert(person).values({
-        email,
-        name,
-        password,
-        phone,
-        type,
-        adminId,
-        status,
-      });
-    }
-
-    if (type === "student") {
-      const studentInsertResponse = await tx
-        .insert(student)
-        .values({ name })
-        .returning();
-      const studentEnrollment = studentInsertResponse[0].enrollment;
 
       await tx.insert(person).values({
         email,
@@ -47,7 +28,7 @@ export const createPerson = async (formData: FormData) => {
         status,
       });
     }
-  });
+);
 
   revalidatePath("/people");
   redirect("/people");
@@ -85,10 +66,3 @@ export const getPerson = async (id: string) => {
 
   return people[0];
 };
-
-export const getStudents = async () => {
-  "use server";
-
-  return await db.select().from(person).where(eq(person.type, 'student'));
-};
-

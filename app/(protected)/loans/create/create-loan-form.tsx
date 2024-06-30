@@ -16,23 +16,24 @@ import { Book, Person } from "@/db/schema";
 import { useState } from "react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
+import { ActionResponse } from "@/types";
+import { toast } from "sonner";
 
 const DEFAULT_URL = "https://generated.vusercontent.net/placeholder.svg";
 
 interface CreateLoanFormProps {
     books: Book[],
     students: Person[],
-    createLoan: (formData: FormData) => Promise<never>
+    createLoan: (formData: FormData) => Promise<ActionResponse>
 }
 
-    const getTodayDate = () => {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
+const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
 
 const CreateLoanForm = ({ books, students, createLoan }: CreateLoanFormProps) => {
     const [bookCover, setBookCover] = useState('')
@@ -43,9 +44,18 @@ const CreateLoanForm = ({ books, students, createLoan }: CreateLoanFormProps) =>
         setBookCover(selectedBook[0].cover)
     }
 
-
     return (
-        <form action={createLoan} className="space-y-4 w-[680px] h-full">
+        <form action={async (formData: FormData) => {
+            const response = await createLoan(formData);
+
+            console.log(response.status)
+
+            if (response.status === "error") return toast.error(response.message);
+
+            toast.success(response.message)
+            //redicionar
+
+        }} className="space-y-4 w-[680px] h-full">
             <Card className="w-full h-full pt-6">
                 <CardContent>
                     <div className="grid grid-cols-2 gap-6">
@@ -57,12 +67,12 @@ const CreateLoanForm = ({ books, students, createLoan }: CreateLoanFormProps) =>
                                 width={250}
                                 src={bookCover}
                             /> : <Image
-                            alt="Product image"
-                            className="aspect-[6/10] w-full rounded-md object-cover"
-                            height={250}
-                            width={250}
-                            src={DEFAULT_URL}
-                        />}
+                                alt="Product image"
+                                className="aspect-[6/10] w-full rounded-md object-cover"
+                                height={250}
+                                width={250}
+                                src={DEFAULT_URL}
+                            />}
                         </div>
                         <div className="grid w-full gap-4">
                             <div className="flex flex-col space-y-1.5 gap-4">
@@ -70,8 +80,8 @@ const CreateLoanForm = ({ books, students, createLoan }: CreateLoanFormProps) =>
                                 <CardDescription>Preencha as informações para criar um novo empréstimo.</CardDescription>
                                 <FormSection className="grid gap-6">
                                     <FormItem>
-                                        <Label htmlFor="category">Aluno</Label>
-                                        <Select name="category">
+                                        <Label htmlFor="personId">Aluno</Label>
+                                        <Select required name="personId">
                                             <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Selecione o aluno" />
                                             </SelectTrigger>
@@ -87,8 +97,8 @@ const CreateLoanForm = ({ books, students, createLoan }: CreateLoanFormProps) =>
                                 </FormSection>
                                 <FormSection className="grid gap-6">
                                     <FormItem>
-                                        <Label htmlFor="category">Livros</Label>
-                                        <Select name="category" onValueChange={handleBookChange}>
+                                        <Label htmlFor="bookId">Livros</Label>
+                                        <Select required name="bookId" onValueChange={handleBookChange}>
                                             <SelectTrigger className="w-full">
                                                 <SelectValue placeholder="Selecione a categoria" />
                                             </SelectTrigger>
@@ -105,11 +115,11 @@ const CreateLoanForm = ({ books, students, createLoan }: CreateLoanFormProps) =>
                                 <FormSection className="grid gap-6">
                                     <FormItem>
                                         <Label htmlFor="loanDate">Data de empréstimo</Label>
-                                        <Input name="loanDate" type="date" defaultValue={getTodayDate()} />
+                                        <Input required name="loanDate" type="date" defaultValue={getTodayDate()} />
                                     </FormItem>
                                 </FormSection>
                             </div>
-                            <div className="flex justify-start items-end">
+                            <div className="flex justify-end self-end">
                                 <Button>Confirmar empréstimo</Button>
                             </div>
                         </div>
