@@ -12,13 +12,14 @@ import {
 } from "@/components/ui/command";
 import { Command as CommandPrimitive } from "cmdk";
 
-type Options = Record<"id" | "name", string>;
+export type Options = Record<"id" | "name", string>;
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   options: Options[];
   defaultValue?: string[];
 }
+//todo: ver se tem como definir um limite de opções selecionadas
 
 const MultiSelect = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, defaultValue = [], options, ...props }, ref) => {

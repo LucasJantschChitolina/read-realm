@@ -50,7 +50,7 @@ export const loan = pgTable("loan", {
   id: uuid("uuid1").defaultRandom().primaryKey(),
   loanDate: date("loan_date").notNull(),
   dueDate: date("due_date").notNull(),
-  status: varchar("status", { length: 10 }).notNull(), // "borrowed", "returned", "overdue" // todo: adicionar na modelagem
+  status: varchar("status", { length: 10 }).notNull(), // "on_time", "overdue" // todo: adicionar na modelagem
   returnDate: date("return_date"),
   bookCopyId: uuid("book_copy_id")
     .references(() => bookCopy.id)

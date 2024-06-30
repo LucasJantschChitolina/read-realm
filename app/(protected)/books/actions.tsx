@@ -153,3 +153,9 @@ export const updateBook = async (
     return { status: "error", message: "Erro ao atualizar livro" };
   }
 };
+
+export const getBooks = async () => {
+  "use server";
+
+  return await db.select().from(book);
+};
