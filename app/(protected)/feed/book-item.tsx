@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 export const BookItem = (book: Book) => {
   return (
     <Link href={`/books/${book.id}/edit`}>
-      Ver livro
       <div
         key={book.id}
         className="p-4 bg-transparent border-none flex flex-col items-center gap-2"
