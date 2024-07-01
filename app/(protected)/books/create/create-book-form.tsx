@@ -48,8 +48,6 @@ const CreateBookForm = ({
         action={async (formData: FormData) => {
           const createdBook = await createBook(formData);
 
-          console.log({ createdBook });
-
           if (createdBook.status === "error")
             return toast.error(createdBook.message);
 
@@ -154,6 +152,7 @@ const CreateBookForm = ({
                       className="min-h-32"
                       placeholder="Insira o resumo do livro"
                       required
+                      maxLength={255}
                     />
                   </FormItem>
                 </FormSection>

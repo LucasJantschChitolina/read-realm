@@ -163,6 +163,7 @@ const EditBookForm = ({
                       placeholder="Insira o resumo do livro"
                       required
                       defaultValue={book.summary}
+                      maxLength={255}
                     />
                   </FormItem>
                 </FormSection>
