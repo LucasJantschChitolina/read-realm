@@ -198,6 +198,7 @@ const EditBookForm = ({
                   <FormItem>
                     <Label htmlFor="author">Autor</Label>
                     <MultiSelect
+                      required
                       placeholder="Selecione o(s) autor(es)"
                       name="author"
                       options={authors}
