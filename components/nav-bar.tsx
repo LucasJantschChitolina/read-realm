@@ -26,8 +26,9 @@ function NavBarItem(props: ItemProps) {
       href={props.href}
     >
       <span
-        className={`p-1 bg-gray-400 rounded-lg ${props.active && "bg-emerald-500"
-          }`}
+        className={`p-1 bg-gray-400 rounded-lg ${
+          props.active && "bg-emerald-500"
+        }`}
       >
         {props.icon}
       </span>
@@ -83,13 +84,13 @@ export default function NavBar() {
         Empréstimos
       </NavBarItem>
       <NavBarItem
-        href="/teste"
+        href="/"
         icon={<BookHeart className="text-white" size={16} />}
       >
         Meus Livros
       </NavBarItem>
       <NavBarItem
-        href="/teste"
+        href="/"
         icon={<FileBarChart2 className="text-white" size={16} />}
       >
         Relatório
