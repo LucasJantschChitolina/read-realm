@@ -46,33 +46,33 @@ const LoansPage = async () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead colSpan={1}>Data de empréstimo</TableHead>
-            <TableHead colSpan={1}>Data de devolução</TableHead>
-            <TableHead colSpan={1}>Status</TableHead>
-            <TableHead colSpan={1}>Aluno</TableHead>
-            <TableHead colSpan={1}>Livro</TableHead>
-            <TableHead colSpan={1}></TableHead>
+            <TableHead>Data de empréstimo</TableHead>
+            <TableHead>Data de devolução</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Aluno</TableHead>
+            <TableHead>Livro</TableHead>
+            <TableHead>Realizar devolução</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {loans?.map((loan) => (
             <TableRow key={loan.loan.id}>
-              <TableCell className="font-medium" colSpan={1}>
+              <TableCell className="font-medium">
                 {loan.loan.loanDate}
               </TableCell>
-              <TableCell className="font-medium" colSpan={1}>
+              <TableCell className="font-medium" >
                 {loan.loan.dueDate}
               </TableCell>
-              <TableCell className="font-medium" colSpan={1}>
+              <TableCell className="font-medium" >
                 {renderStatus(loan.loan.status)}
               </TableCell>
-              <TableCell className="font-medium" colSpan={1}>
+              <TableCell className="font-medium" >
                 {loan.person.name}
               </TableCell>
-              <TableCell className="font-medium" colSpan={1}>
+              <TableCell className="font-medium" >
                 {loan.book.title}
               </TableCell>
-              <TableCell className="font-medium" colSpan={1}>
+              <TableCell className="font-medium" >
                 <DevolutionForm 
                 loan={loan.loan} 
                 person={loan.person} 
