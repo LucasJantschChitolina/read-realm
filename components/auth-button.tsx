@@ -24,7 +24,7 @@ export default async function AuthButton() {
       Hey, {user.email}!
       <form action={signOut}>
         <Button>
-          Logout <LogOut size={16} className="ml-2" />
+          <LogOut size={16} /> 
         </Button>
       </form>
     </div>

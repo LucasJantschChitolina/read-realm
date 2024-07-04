@@ -83,14 +83,9 @@ export default function NavBar() {
       >
         Empréstimos
       </NavBarItem>
+ 
       <NavBarItem
-        href="/"
-        icon={<BookHeart className="text-white" size={16} />}
-      >
-        Meus Livros
-      </NavBarItem>
-      <NavBarItem
-        href="/"
+        href="/report"
         icon={<FileBarChart2 className="text-white" size={16} />}
       >
         Relatório

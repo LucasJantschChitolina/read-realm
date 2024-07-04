@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getLoans } from "./actions";
+import { getLoans, bookDevolution } from "./actions";
 import { Button } from "@/components/ui/button";
 import {
   TableCaption,
@@ -12,6 +12,21 @@ import {
   Table,
 } from "@/components/ui/table";
 import { Plus } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import DevolutionForm from "./create/openDevolutionModal";
+
+const renderStatus = (status: string) => {
+  if (status === 'overdue') {
+    return <Badge variant='destructive'>atrasado</Badge>
+  }
+
+  if (status === 'on_time') {
+    return <Badge variant='success'>no prazo</Badge>
+  }
+
+  else
+    return <Badge variant='default'>finalizado</Badge>;
+}
 
 const LoansPage = async () => {
   const loans = await getLoans();
@@ -33,11 +48,14 @@ const LoansPage = async () => {
           <TableRow>
             <TableHead colSpan={1}>Data de empréstimo</TableHead>
             <TableHead colSpan={1}>Data de devolução</TableHead>
+            <TableHead colSpan={1}>Status</TableHead>
             <TableHead colSpan={1}>Aluno</TableHead>
+            <TableHead colSpan={1}>Livro</TableHead>
+            <TableHead colSpan={1}></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {loans.map((loan) => (
+          {loans?.map((loan) => (
             <TableRow key={loan.loan.id}>
               <TableCell className="font-medium" colSpan={1}>
                 {loan.loan.loanDate}
@@ -46,7 +64,20 @@ const LoansPage = async () => {
                 {loan.loan.dueDate}
               </TableCell>
               <TableCell className="font-medium" colSpan={1}>
-                {loan?.person?.name}
+                {renderStatus(loan.loan.status)}
+              </TableCell>
+              <TableCell className="font-medium" colSpan={1}>
+                {loan.person.name}
+              </TableCell>
+              <TableCell className="font-medium" colSpan={1}>
+                {loan.book.title}
+              </TableCell>
+              <TableCell className="font-medium" colSpan={1}>
+                <DevolutionForm 
+                loan={loan.loan} 
+                person={loan.person} 
+                book={loan.book} 
+                bookDevolution={bookDevolution}/>
               </TableCell>
             </TableRow>
           ))}

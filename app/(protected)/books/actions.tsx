@@ -1,7 +1,7 @@
 import { db } from "@/db/index";
 import { BookInsert, book, bookAuthor, bookCopy } from "@/db/schema";
 import { ActionResponse } from "@/types";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -28,6 +28,22 @@ export const createBook = async (
       authorIdArray = authorIds.split(",");
     }
 
+    const existingBooks = await db
+      .select()
+      .from(book)
+      .leftJoin(bookAuthor, eq(book.id, bookAuthor.bookId))
+      .where(
+        and(
+          eq(book.title, title),
+          eq(book.publisherId, publisherId),
+          inArray(bookAuthor.authorId, authorIdArray)
+        )
+      );
+
+    if (existingBooks.length > 0) {
+      return { status: "error", message: "Livro já cadastrado" };
+    }
+
     return await db.transaction(async (tx) => {
       const bookData: BookInsert = {
         title,
@@ -46,7 +62,6 @@ export const createBook = async (
         .values(bookData)
         .returning({ id: book.id });
 
-      // todo: review the creation of book copies
       Array.from({ length: Number(copies) }).forEach(async () => {
         await tx.insert(bookCopy).values({ bookId: createdBookId[0].id });
       });
@@ -65,6 +80,7 @@ export const createBook = async (
     return { status: "error", message: "Erro ao criar livro" };
   }
 };
+
 
 export const deleteBook = async (id: string) => {
   "use server";
@@ -132,7 +148,6 @@ export const updateBook = async (
     };
 
     await db.transaction(async (tx) => {
-      // todo: review the deletion of book authors will cause conflicts if already is related to a book
       await tx.delete(bookAuthor).where(eq(bookAuthor.bookId, id));
       await tx
         .delete(bookCopy)
@@ -147,10 +162,8 @@ export const updateBook = async (
         .from(bookCopy)
         .where(eq(bookCopy.bookId, id));
 
-      //todo: solve later gives bug if setting number of copies to 0
       const copiesToInsert = Number(copies) - alreadyInsertedCopies.length;
 
-      // todo: review the creation of book copies
       Array.from({ length: copiesToInsert }).forEach(async () => {
         await tx.insert(bookCopy).values({ bookId: id });
       });

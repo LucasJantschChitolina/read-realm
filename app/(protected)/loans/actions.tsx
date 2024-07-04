@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { book, bookCopy, loan, person } from "@/db/schema";
 import { ActionResponse } from "@/types";
-import { eq, and, count } from "drizzle-orm";
+import { eq, and, count, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 const calculateDevolutionDate = (loanDate: Date): string => {
@@ -110,10 +110,14 @@ export const createLoan = async (
 export const getLoans = async () => {
   "use server";
 
+  await db.execute(sql`CALL mark_overdue_loans()`);
+
   return await db
     .select()
     .from(loan)
-    .leftJoin(person, eq(loan.personId, person.id));
+    .innerJoin(person, eq(loan.personId, person.id))
+    .innerJoin(bookCopy, eq(loan.bookCopyId, bookCopy.id))
+    .innerJoin(book, eq(bookCopy.bookId, book.id));
 };
 
 export const getLoan = async (id: string) => {
@@ -123,3 +127,45 @@ export const getLoan = async (id: string) => {
 
   return loans[0];
 };
+
+export const bookDevolution = async (
+  formData: FormData
+): Promise<ActionResponse> => {
+  "use server";
+
+  try {
+    const returnDate = formData.get("return_date") as string;
+    const bookId = formData.get("bookId") as string;
+    const personId = formData.get("personId") as string;
+    const loanId = formData.get("loanId") as string;
+
+
+    console.log('return_date', returnDate);
+    console.log('bookID', bookId);
+    console.log('personId', personId);
+    console.log('loanId', loanId);
+
+
+    if (!returnDate || !bookId || !personId || !loanId) {
+      throw new Error("Não foi possível processar o empréstimo");
+    }
+
+    await db.transaction(async (tx) => {
+      await tx
+        .update(bookCopy)
+        .set({ borrowed: false })
+        .where(eq(bookCopy.id, bookId));
+
+      await tx.update(loan)
+      .set({returnDate: returnDate,status: "finished"})
+      .where(eq(loan.id, loanId));
+    });
+
+    revalidatePath("/loans");
+    return { message: "Livro devolvido com sucesso.", status: "success" };
+  } catch (error) {
+    console.log("Error creating loan: ", error);
+    return { message: "Erro ao gerar empréstimo.", status: "error" };
+  }
+};
+
