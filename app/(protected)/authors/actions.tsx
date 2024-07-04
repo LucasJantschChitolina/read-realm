@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { author} from "@/db/schema";
+import { author } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -8,6 +8,15 @@ export const createAuthor = async (formData: FormData) => {
   "use server";
 
   const name = formData.get("name") as string;
+
+  const authorExists = await db
+    .select()
+    .from(author)
+    .where(eq(author.name, name));
+
+  if (authorExists.length > 0) {
+    return { status: "error", message: "Autor já cadastrado" };
+  }
 
   await db.insert(author).values({ name });
 
@@ -43,10 +52,7 @@ export const getAuthors = async () => {
 export const getAuthor = async (id: string) => {
   "use server";
 
-  const authors = await db
-    .select()
-    .from(author)
-    .where(eq(author.id, id));
+  const authors = await db.select().from(author).where(eq(author.id, id));
 
   return authors[0];
 };

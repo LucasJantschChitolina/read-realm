@@ -26,6 +26,15 @@ export const createPublisher = async (formData: FormData) => {
 
   const name = formData.get("name") as string;
 
+  const publisherExists = await db
+    .select()
+    .from(publisher)
+    .where(eq(publisher.name, name));
+
+  if (publisherExists.length > 0) {
+    return { status: "error", message: "Editora já cadastrada" };
+  }
+
   await db.insert(publisher).values({ name });
 
   revalidatePath("/publishers");

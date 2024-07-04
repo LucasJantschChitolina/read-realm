@@ -14,6 +14,15 @@ export const createCategory = async (
 
     if (!name) return { status: "error", message: "Nome é obrigatório." };
 
+    const categoryExists = await db
+      .select()
+      .from(category)
+      .where(eq(category.name, name));
+
+    if (categoryExists.length > 0) {
+      return { status: "error", message: "Categoria já cadastrada." };
+    }
+
     await db.insert(category).values({ name });
 
     revalidatePath("/categories");
